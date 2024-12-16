@@ -42,6 +42,6 @@ app.get('/logout', (req, res) => {
 // Redirect
 app.use((req, res, next) => { res.redirect('/product') });
 // Run App
-app.listen(8080, () => { console.log(`http://localhost:8080/`) });
+app.listen(3000, () => { console.log(`http://localhost:3000/`) });
 
 module.exports = app;
