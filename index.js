@@ -2,6 +2,7 @@ const express = require('express');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const path = require('path')
 
 
 // express 기본 설정
@@ -22,8 +23,11 @@ app.use(session({
 
 app.get("/asset/:fileName.:ex", (req, res) => {
   const { fileName, ex } = req.params
-  if(["html","css","js"].includes(ex)){ res.sendFile(`${fileName}.${ex}`, { root: `public/${fileName}/` }) }
-  else { res.status(404).json({Lee: "Not Found"}) }
+  if(["html","css","js"].includes(ex)){ 
+    res.sendFile(`${fileName}.${ex}`, { root: path.join(__dirname, `public/${fileName}`) });
+  } else { 
+    res.status(404).json({Lee: "Not Found"}) 
+  }
 })
 
 
@@ -40,8 +44,11 @@ app.get('/logout', (req, res) => {
 
 
 // Redirect
-app.use((req, res, next) => { res.redirect('/product') });
-// Run App
-app.listen(3000, () => { console.log(`http://localhost:3000/`) });
+app.use((req, res) => {
+  res.redirect('/product');
+});
 
-module.exports = app;
+// Run App
+// app.listen(3000, () => { console.log(`http://localhost:3000/`) });
+
+module.exports = app
